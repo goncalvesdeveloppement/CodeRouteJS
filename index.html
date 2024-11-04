@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <title>Code de la route</title>
+    </head>
+    <body>
+        <div id="QuestionContainer">
+            <div id="Image">
+                <img src="./assets/camion.png" alt="" srcset="">
+            </div>
+            <div id="NumQuestion">Question 01</div>
+            <div id="Enonce">Je dépasse le camion :</div>
+        </div>
+        <div id="ReponseContainer">
+            <div id="Propositions">
+                <div id="A">Je le dépasse directement.....................................A</div>
+                <div id="B">Je ralentis et mets mon clignotant............................B</div>
+                <div id="C">Je vérifie l'angle mort droit.................................C</div>
+                <div id="D">Je reste derrière le camion...................................D</div>
+            </div>
+            <form action="#">
+                <input type="checkbox" name="A" id="CheckA">
+                <label for="A">A</label>
+                <input type="checkbox" name="B" id="CheckB">
+                <label for="B">B</label>
+                <input type="checkbox" name="C" id="CheckC">
+                <label for="C">C</label>
+                <input type="checkbox" name="D" id="CheckD">
+                <label for="D">D</label>
+
+                <input type="submit" value="Valider">
+            </form>
+        </div>
+    </body>
+
+    <script src="./script.js"></script>
+</html>

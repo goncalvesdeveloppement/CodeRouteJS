@@ -12,14 +12,20 @@
 </head>
 
 <body>
-    <div id="QuestionContainer">
+    <div id="StartMenu">
+        MarioCode 9 deluxe <br>Push start
+        <button onclick="Start()">start.</button>
+    </div>
+    <div id="QuestionContainer" class="hidden">
         <div id="Image">
             <img src="./assets/camion.png" alt="" srcset="">
         </div>
-        <div id="Question">Question <p id="Numero">01</p></div> 
+        <div id="Question">Question <p id="Numero">01</p>
+        </div>
+        <div id="Temps">00:15</div>
         <div id="Enonce">Je dépasse le camion :</div>
     </div>
-    <div id="ReponseContainer">
+    <div id="ReponseContainer" class="hidden">
         <div id="Propositions">
             <div class="prop" id="PropA">
                 <div id="A">Je le dépasse directement</div>
@@ -42,10 +48,12 @@
                 <div>D</div><input type="checkbox" name="D" id="CheckD">
             </div>
         </div>
-        <div id="ValContainer">
+        <div id="ValContainer" class="hidden">
             <input onclick="jeu.Valider()" id="VALIDATION" type="submit" value="Valider">
         </div>
     </div>
+    <audio src="./assets/tick.mp3"></audio>
+    <audio src="./assets/stop.mp3"></audio>
 </body>
 
 <script src="./script.js"></script>

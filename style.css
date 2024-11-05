@@ -10,9 +10,9 @@ html {
 }
 
 body {
-    width: 1280px;
+    width: 900px;
     height: 720px;
-    margin: calc(50vh - 360px) calc(50vw - 640px);
+    margin: calc(50vh - 360px) calc(50vw - 450px);
     position: fixed;
     font-family: Font1;
     color: white;
@@ -108,8 +108,8 @@ label {
     bottom: 2px;
 }
 
-.hidden {
-    display: none;
+.hidden, .hidden * {
+    display: none !important;
 }
 
 #VALIDATION {

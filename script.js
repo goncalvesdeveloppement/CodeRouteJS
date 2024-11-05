@@ -41,9 +41,13 @@ class Jeu {
 		}
 	}
 
+	Valider() {
+		this.ProchainJoueur();
+	}
+
 	ProchaineQuestion() {
-		joueurActuel = 1;
-		this.AfficherQuestion(this.questionActuelle);
+		this.joueurActuel = 1;
+		this.AfficherQuestion(++this.questionActuelle);
 	}
 
 	ProchainJoueur() {

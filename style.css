@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'Kart';
+    src: url(fonts/mario_kart_f2.ttf);
+}
+
 html {
     background-color: black;
     width: 100%;
@@ -5,7 +10,6 @@ html {
 }
 
 body {
-    background-color: var(--new_jaune);
     width: 1280px;
     height: 720px;
     margin: calc(50vh - 360px) calc(50vw - 640px);
@@ -18,4 +22,104 @@ body {
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    font-family: "Outfit", sans-serif;
+}
+
+img {
+    margin: 20px 0;
+    width: 800px;
+    max-height: 400px;
+    max-width: 800px;
+}
+
+.dots {
+    margin: 0 8px;
+    width: -webkit-fill-available;
+    background-size: 1%;
+    height: 8px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='20' width='20'%3E%3Ccircle cx='10' cy='10' r='5' fill='%23e0e0e0' /%3E%3C/svg%3E ");
+}
+
+.prop {
+    display: flex;
+    align-items: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    position: relative;
+    top: -12%;
+    left: 20%;
+}
+
+#A, #B, #C, #D {
+    white-space: nowrap;
+}
+
+#ReponseContainer {
+    width: 100%;
+    max-width: 800px;
+}
+
+#Propositions {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    text-align: left;
+}
+
+#Propositions div {
+    text-align: left;
+}
+
+#QuestionContainer {
+    display: flex;
+    padding-bottom: 20px;
+    flex-direction: column;
+}
+
+#Question {
+    display: flex;
+    font-family: 'Kart';
+    align-items: center;
+    font-size: 24px;
+}
+
+.Answer {
+    padding-bottom: 20px;
+}
+
+#NumQuestion {
+    font-family: 'Kart';
+}
+
+#Numero {
+    font-size: xx-large;
+    margin: 0;
+    font-family: Font1;
+    padding-left: 8px;
+    font-weight: bold;
+    position: relative;
+    bottom: 2px;
+}
+
+.hidden {
+    display: none;
+}
+
+#VALIDATION {
+    margin-top: 40px;
+    width: 180px;
+    font-family: 'Kart';
+}
+
+#ValContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }

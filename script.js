@@ -106,7 +106,7 @@ class Jeu {
 		else
 		{
 			this.joueurActuel = 1;
-			this.AfficherQuestion(++this.numQuestionActuelle);
+			this.numQuestionActuelle++;
 		}
 	}
 
@@ -147,6 +147,8 @@ class Jeu {
 
 		document.getElementsByTagName("audio")[0].currentTime = 0;
 		document.getElementsByTagName("audio")[0].play();
+		
+		this.AfficherQuestion(this.numQuestionActuelle);
 	}
 
 	AfficherQuestion(numQuestion) {

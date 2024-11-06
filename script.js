@@ -27,12 +27,7 @@ class Question {
 	IsCorrect(answers) {
 		let result = true;
 
-		console.log("user : " + answers + "\ncorrect : " + this.defaultAnswers);
-		
-
 		for (let index = 0; index < 4; index++) {
-			console.log(`Réponse utilisateur à l'indice ${index} : ${answers[index]}, Réponse correcte : ${this.defaultAnswers[index]}`);
-
 			if (answers[index] != this.defaultAnswers[index] && this.defaultAnswers[index] > -1) {
 				result = false;
 				console.log("Réponse incorrecte détectée à l'indice " + index);
@@ -47,7 +42,7 @@ class Jeu {
 	totalQuestions = 40;
 	tempsReponses = 1500; // en 1/100 secondes
 	questions = new Array();
-	numQuestionActuelle = 0;
+	numQuestionActuelle = 1;
 	joueurs = new Array();
 	joueurActuel = 1;
 	interval;
@@ -86,9 +81,7 @@ class Jeu {
 		answers[2] = document.getElementById("CheckC").checked ? 1 : 0;
 		answers[3] = document.getElementById("CheckD").checked ? 1 : 0;
 
-		let numQuestionTmp = this.numQuestionActuelle - 1;
-		console.log("this.numQuestionActuelle = " + numQuestionTmp);
-		
+		let numQuestionTmp = this.numQuestionActuelle - 1;		
 
 		if (this.questions[numQuestionTmp].defaultAnswers[3] <= -1)
 			answers[3] = this.questions[numQuestionTmp].defaultAnswers[3];
@@ -96,27 +89,18 @@ class Jeu {
 		if (this.questions[numQuestionTmp].defaultAnswers[2] <= -1)
 			answers[2] = this.questions[numQuestionTmp].defaultAnswers[2];
 		
-		alert("tes réponses : " + answers);
-		alert("bonnes réps : " + this.questions[numQuestionTmp].defaultAnswers);
-		
 		let time = this.tempsReponses - tempsActuel;
 
 		let pointsBonus = this.GetPointsFromTime(time, answers);
 
 		this.joueurs[this.joueurActuel - 1].points += pointsBonus;
-
-		if (pointsBonus > 0)
-			console.log("bravo vous gagnez " + this.GetPointsFromTime(time, answers) + " points.");
-		else
-			console.log("oups mauvaise réponse");
-
 		this.ProchainJoueur();
 	}
 
 	ProchaineQuestion() {
 		if(this.numQuestionActuelle >= this.questions.length){
 			this.joueurs.sort( compare );
-			for(i = 0; i < this.joueurs.length; i++)
+			for(let i = 0; i < this.joueurs.length; i++)
 				alert("#" + (this.joueurs.length - i) + " : " + this.joueurs[i].nom + " — " + this.joueurs[i].points);
 		} 
 		else
@@ -148,11 +132,8 @@ class Jeu {
 		document.getElementById("CheckB").checked = false;
 		document.getElementById("CheckC").checked = false;
 		document.getElementById("CheckD").checked = false;
-
-		document.getElementsByTagName("audio")[0].currentTime = 0;
-		document.getElementsByTagName("audio")[0].play();
-
 		this.joueurActuel++;
+
 		tempsActuel = this.tempsReponses;
 
 		this.interval = setInterval(() => this.CheckRemainingTime(), 10);
@@ -160,11 +141,16 @@ class Jeu {
 		if (this.joueurActuel > this.joueurs.length) {
 			this.ProchaineQuestion();
 		}
+
+		if (jeu.joueurs.length > 1)
+			alert("à toi, " + this.joueurs[this.joueurActuel - 1].nom + " !");
+
+		document.getElementsByTagName("audio")[0].currentTime = 0;
+		document.getElementsByTagName("audio")[0].play();
 	}
 
 	AfficherQuestion(numQuestion) {
 		this.numQuestionActuelle = numQuestion;
-		alert("la question " + numQuestion);
 
 		if (numQuestion > this.totalQuestions)
 			FinJeu();
@@ -194,8 +180,6 @@ class Jeu {
 			else {
 				document.getElementById("PropD").classList.add("hidden");
 			}
-
-			alert(this.questions[numQuestion].defaultAnswers);
 		}
 	}
 }
@@ -263,11 +247,9 @@ function Start() {
 	document.getElementById("StartMenu").classList.add("hidden");
 
 	jeu.joueurs.push(new Joueur("nath"));
-	/*jeu.joueurs.push(new Joueur("antho"));
-	jeu.joueurs.push(new Joueur("rémi"));*/
+	jeu.joueurs.push(new Joueur("antho"));
+	jeu.joueurs.push(new Joueur("rémi"));
 
-	jeu.joueurActuel = 99;
+	jeu.joueurActuel = 0;
 	jeu.ProchainJoueur();
-
-
 }

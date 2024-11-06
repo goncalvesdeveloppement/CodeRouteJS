@@ -14,12 +14,13 @@ class Question {
 	enonce = "";
 	points = 1;
 	defaultAnswers = [1, 0, 0, 0]; // 1 = bonne réponse, 0 = mauvaise réponse, -1 = réponse masquée
-	answersText = ["Oui", "Non", "Peut-être", "Je ne sais pas"]; // qui à la ref ??
+	answersText = ["", "", "", ""]; 
 
-	constructor(id, enonce, answers) {
-		this.id = id;
+	constructor(enonce, answers, answersText) {
+		this.id = idQuestion++;
 		this.enonce = enonce;
 		this.defaultAnswers = answers;
+		this.answersText = answersText;
 		this.points = 1; // changer plus tard
 	}
 
@@ -59,8 +60,8 @@ class Jeu {
 		return Math.round((this.questions[this.numQuestionActuelle - 1].IsCorrect(answers) ? points * coef : 0));
 	}
 
-	ChoixQuestions() {
-		const reserve = [...allQuestions];
+	ChoixQuestions(id) {
+		const reserve = [...questionsDb[id]];
 
 		for (let index = 0; index < this.totalQuestions; index++) {
 			let rdm = Math.floor(Math.random() * reserve.length);
@@ -215,18 +216,24 @@ function NumberFormat(number, digits = 2) {
 	return number + "";
 }
 
-const allQuestions = new Array();
+let idQuestion = 1;
+const questionsDb = new Array();
+const questionsF = new Array();
+const questionsM = new Array();
+const questionH = new Array();
 
-allQuestions.push(new Question(1, "Je dépasse le camion ?", [1, 0, 0, -1]));
-allQuestions.push(new Question(2, "Je dépasse le vélo ?", [1, 0, 1, 1]));
-allQuestions.push(new Question(3, "Je dépasse la tesla ?", [1, 0, 0, -1]));
-allQuestions.push(new Question(4, "Je dépasse mes limites ?", [1, 0, 0, -1]));
-allQuestions.push(new Question(5, "Je dépasse le maître ?", [1, 0, -6, -1]));
-allQuestions.push(new Question(6, "Je dépasse la vitesse du son ?", [0, 1, -7, -1]));
+questionsF.push(new Question("Je dépasse le camion ?", [1, 0, 0, -1], ["","","",""]));
+questionsF.push(new Question("Je dépasse le vélo ?", [1, 0, 1, 1], ["","","",""]));
+questionsF.push(new Question("Je dépasse la tesla ?", [1, 0, 0, -1], ["","","",""]));
+questionsF.push(new Question("Je dépasse mes limites ?", [1, 0, 0, -1], ["","","",""]));
+questionsF.push(new Question("Je dépasse le maître ?", [1, 0, -6, -1], ["","","",""]));
+questionsF.push(new Question("Je dépasse la vitesse du son ?", [0, 1, -7, -1], ["","","",""]));
+
+questionsDb.push(questionsF);
 
 function Start() {
 	jeu = new Jeu();
-	jeu.ChoixQuestions();
+	jeu.ChoixQuestions(0);
 
 	document.getElementById("QuestionContainer").classList.remove("hidden");
 	document.getElementById("ReponseContainer").classList.remove("hidden");

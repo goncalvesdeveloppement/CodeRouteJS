@@ -26,6 +26,9 @@ class Question {
 	IsCorrect(answers) {
 		let result = true;
 
+		console.log("user : " + answers + "\ncorrect : " + this.defaultAnswers);
+		
+
 		for (let index = 0; index < 4; index++) {
 			console.log(`Réponse utilisateur à l'indice ${index} : ${answers[index]}, Réponse correcte : ${this.defaultAnswers[index]}`);
 
@@ -43,7 +46,7 @@ class Jeu {
 	totalQuestions = 40;
 	tempsReponses = 1500; // en 1/100 secondes
 	questions = new Array();
-	numQuestionActuelle = 1;
+	numQuestionActuelle = 0;
 	joueurs = new Array();
 	joueurActuel = 1;
 	interval;
@@ -53,7 +56,7 @@ class Jeu {
 		let coef = (Math.exp(-(0.003) * timeElapsed) * 100) + 5;
 		let points = this.questions[this.numQuestionActuelle].points;
 
-		return Math.round((this.questions[this.numQuestionActuelle].IsCorrect(answers) ? points * coef : 0));
+		return Math.round((this.questions[this.numQuestionActuelle - 1].IsCorrect(answers) ? points * coef : 0));
 	}
 
 	ChoixQuestions() {
@@ -81,12 +84,19 @@ class Jeu {
 		answers[2] = document.getElementById("CheckC").checked ? 1 : 0;
 		answers[3] = document.getElementById("CheckD").checked ? 1 : 0;
 
-		if (this.questions[this.numQuestionActuelle].defaultAnswers[3] == -1)
-			answers[3] = -1;
+		let numQuestionTmp = this.numQuestionActuelle - 1;
+		console.log("this.numQuestionActuelle = " + numQuestionTmp);
+		
 
-		if (this.questions[this.numQuestionActuelle].defaultAnswers[2] == -1)
-			answers[2] = -1;
-
+		if (this.questions[numQuestionTmp].defaultAnswers[3] <= -1)
+			answers[3] = this.questions[numQuestionTmp].defaultAnswers[3];
+		
+		if (this.questions[numQuestionTmp].defaultAnswers[2] <= -1)
+			answers[2] = this.questions[numQuestionTmp].defaultAnswers[2];
+		
+		alert("tes réponses : " + answers);
+		alert("bonnes réps : " + this.questions[numQuestionTmp].defaultAnswers);
+		
 		let time = this.tempsReponses - tempsActuel;
 
 		let pointsBonus = this.GetPointsFromTime(time, answers);
@@ -137,11 +147,15 @@ class Jeu {
 
 		this.interval = setInterval(() => this.CheckRemainingTime(), 10);
 
-		if (this.joueurActuel > this.joueurs.length)
+		if (this.joueurActuel > this.joueurs.length) {
 			this.ProchaineQuestion();
+		}
 	}
 
 	AfficherQuestion(numQuestion) {
+		this.numQuestionActuelle = numQuestion;
+		alert("la question " + numQuestion);
+
 		if (numQuestion > this.totalQuestions)
 			FinJeu();
 		else {
@@ -170,6 +184,8 @@ class Jeu {
 			else {
 				document.getElementById("PropD").classList.add("hidden");
 			}
+
+			alert(this.questions[numQuestion].defaultAnswers);
 		}
 	}
 }
@@ -201,12 +217,12 @@ function NumberFormat(number, digits = 2) {
 
 const allQuestions = new Array();
 
-allQuestions.push(new Question(1, "Je dépasse le camion ?", [1, 0, -1, -1]));
-allQuestions.push(new Question(2, "Je dépasse le vélo ?", [1, 0, -1, -1]));
-allQuestions.push(new Question(3, "Je dépasse la tesla ?", [0, 0, 1, -1]));
-allQuestions.push(new Question(4, "Je dépasse mes limites ?", [1, 0, -1, -1]));
-allQuestions.push(new Question(5, "Je dépasse le maître ?", [0, 0, 1, -1]));
-allQuestions.push(new Question(6, "Je dépasse la vitesse du son ?", [0, 1, -1, -1]));
+allQuestions.push(new Question(1, "Je dépasse le camion ?", [1, 0, 0, -1]));
+allQuestions.push(new Question(2, "Je dépasse le vélo ?", [1, 0, 1, 1]));
+allQuestions.push(new Question(3, "Je dépasse la tesla ?", [1, 0, 0, -1]));
+allQuestions.push(new Question(4, "Je dépasse mes limites ?", [1, 0, 0, -1]));
+allQuestions.push(new Question(5, "Je dépasse le maître ?", [1, 0, -6, -1]));
+allQuestions.push(new Question(6, "Je dépasse la vitesse du son ?", [0, 1, -7, -1]));
 
 function Start() {
 	jeu = new Jeu();
@@ -219,7 +235,6 @@ function Start() {
 
 	jeu.joueurs.push(new Joueur("nath"));
 
-	jeu.AfficherQuestion(1);
-	jeu.joueurActuel = 0;
+	jeu.joueurActuel = 99;
 	jeu.ProchainJoueur();
 }

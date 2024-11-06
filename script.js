@@ -51,17 +51,18 @@ class Jeu {
 	joueurs = new Array();
 	joueurActuel = 1;
 	interval;
+	mode = 0;
 
 	// Récupère le multiplicateur de points selon le temps écoulé (en 1/100 s)
 	GetPointsFromTime(timeElapsed, answers) {
 		let coef = (Math.exp(-(0.003) * timeElapsed) * 100) + 5;
-		let points = this.questions[this.numQuestionActuelle].points;
+		let points = this.questions[this.numQuestionActuelle - 1].points;
 
 		return Math.round((this.questions[this.numQuestionActuelle - 1].IsCorrect(answers) ? points * coef : 0));
 	}
 
-	ChoixQuestions(id) {
-		const reserve = [...questionsDb[id]];
+	ChoixQuestions() {
+		const reserve = [...questionsDb[this.mode]];
 
 		for (let index = 0; index < this.totalQuestions; index++) {
 			let rdm = Math.floor(Math.random() * reserve.length);
@@ -113,8 +114,16 @@ class Jeu {
 	}
 
 	ProchaineQuestion() {
-		this.joueurActuel = 1;
-		this.AfficherQuestion(++this.numQuestionActuelle);
+		if(this.numQuestionActuelle >= this.questions.length){
+			this.joueurs.sort( compare );
+			for(i = 0; i < this.joueurs.length; i++)
+				alert("#" + (this.joueurs.length - i) + " : " + this.joueurs[i].nom + " — " + this.joueurs[i].points);
+		} 
+		else
+		{
+			this.joueurActuel = 1;
+			this.AfficherQuestion(++this.numQuestionActuelle);
+		}
 	}
 
 	CheckRemainingTime() {
@@ -165,7 +174,7 @@ class Jeu {
 
 			document.getElementById("Enonce").innerHTML = this.questions[numQuestion].enonce;
 
-			document.getElementsByTagName("img")[0].src = "./assets/" + NumberFormat(this.questions[numQuestion].id) + ".jpg";
+			document.getElementsByTagName("img")[0].src = "./assets/" + this.mode + "/" + this.questions[numQuestion].id + ".jpg";
 
 			document.getElementById("A").innerHTML = this.questions[numQuestion].answersText[0];
 			document.getElementById("B").innerHTML = this.questions[numQuestion].answersText[1];
@@ -201,6 +210,18 @@ class Joueur {
 	}
 }
 
+function compare( a, b ) {
+	if ( a.points < b.points ){
+	  return -1;
+	}
+	if ( a.points > b.points ){
+	  return 1;
+	}
+	return 0;
+  }
+  
+ 
+
 function NumberFormat(number, digits = 2) {
 	if ((number + "").length < digits) {
 		let missingDigits = digits - (number + "").length;
@@ -233,7 +254,8 @@ questionsDb.push(questionsF);
 
 function Start() {
 	jeu = new Jeu();
-	jeu.ChoixQuestions(0);
+	jeu.mode = 0;
+	jeu.ChoixQuestions();
 
 	document.getElementById("QuestionContainer").classList.remove("hidden");
 	document.getElementById("ReponseContainer").classList.remove("hidden");
@@ -241,7 +263,11 @@ function Start() {
 	document.getElementById("StartMenu").classList.add("hidden");
 
 	jeu.joueurs.push(new Joueur("nath"));
+	/*jeu.joueurs.push(new Joueur("antho"));
+	jeu.joueurs.push(new Joueur("rémi"));*/
 
 	jeu.joueurActuel = 99;
 	jeu.ProchainJoueur();
+
+
 }

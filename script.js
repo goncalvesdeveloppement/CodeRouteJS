@@ -72,6 +72,7 @@ class Jeu {
 	}
 
 	Valider() {
+		document.getElementById("VALIDATION").disabled = true;
 		clearInterval(this.interval);
 		document.getElementsByTagName("audio")[0].pause();
 
@@ -172,6 +173,7 @@ class Jeu {
 	}
 
 	ProchainJoueur() {
+		document.getElementById("VALIDATION").disabled = false;
 		document.getElementById("CheckA").disabled = false;
 		document.getElementById("CheckB").disabled = false;
 		document.getElementById("CheckC").disabled = false;
@@ -274,7 +276,7 @@ let idQuestion = 1;
 const questionsDb = new Array();
 const questionsF = new Array();
 const questionsM = new Array();
-const questionsH = new Array();
+const questionsD = new Array();
 
 questionsF.push(new Question("Je vois un panneau stop je m'arrête ?", [1, 0, -1, -1], ["Oui", "Non", "", ""]));
 questionsF.push(new Question("Comment appelle-t-on un poisson qui sort de l'eau et traverse la route?", [1, 0, 0, -1], ["Un piéton", "Un poisson volant", "Un pied de thon", ""]));
@@ -342,10 +344,40 @@ questionsM.push(new Question("Ce nouveau panneau a été mis en vigueur depuis 2
 
 idQuestion = 1;
 
-// questionsD.push...
+questionsD.push(new Question("Selon la créatrice de hello kitty (Sanrio) de quel espèce est kitty? :", [0, 0, 1, 0], ["Une chatte", "Une chatte blanche", "Une humaine", "bah oui c'est une chatte"]));
+questionsD.push(new Question("Quel est l'état de santé de grumpy cat? :", [1, 0, 0, -1], ["il est décèder snif", "il vas bien", "il est malade", ""]));
+questionsD.push(new Question("Comment s'appel ce chien??? :", [0, 1, 0, 0], ["VodkaPomme", "Diabolo", "Scooby", "Diablo"]));
+questionsD.push(new Question("Quelle est la marque de la moto que Shadow le hérisson conduit, dans le jeu du même nom? :", [0, 0, 1, 0], ["Yamada", "Harley", "Ducati", "Honda"]));
+questionsD.push(new Question("Plus le temps il faut choisir! Qui écraser vous pour sauvez les autres? :", [0, 1, 0, -1], ["l'Enfant", "l'Adulte", "La mamie", ""]));
+questionsD.push(new Question("Vous trouvez un oeuf de Yoshi pendant votre Pique nique sur l'air d'autoroute quel est votre réaction? :", [0, 1, 0, -1], ["Je le garde pour la contreBande", "Je le remet au autorité compétentes", "Vous utilisé l'oeuf pour faire une omelette", ""]));
+questionsD.push(new Question("Vous voyez en tant que pieton un Bébé pinguoin perdu au milieux de la route (il pleure très fort et de façon insupportable) que faite vous? :", [-1, 1, 1, 0], ["Je le laisse au milieux de la route", "Je l'aide a retrouver sa maman", "Je le jete dans le vide ou dans la bouche d'égout la plus proche", "La réponse D"]));
+questionsD.push(new Question("Vous voyez un camion qui pile que faites vous dans cette situation? :", [0, 1, 0, 1], ["Vous priez", "Vous priez", "Vous vous la jouer Batman et esquivez le camion", "Vous vous dites qu'il valait peut-être mieux lire le texte sur le camion en fin de compte..."]));
+questionsD.push(new Question("Dans Doctor Who a qu'elle espèce appartient le docteur? :", [0, 0, 1, 0], ["Les daleks", "CyberMan", "Seigneur du temps", "Les Anges"]));
+questionsD.push(new Question("Combien de dinosaur y a t'il sur la map parc Dino Dino? (on ne compte pas les doublon):", [0, 0, 1, 0], ["1", "4", "5", "8"]));
+questionsD.push(new Question("COMMENT PREND-T-ONT UN ROND POINT (EN FRANCE)? :", [0, 1, 0, 0], ["Par la gauche", "Par la droite", "On le coupe (vous êtes mort)", "on le prend pas"]));
+questionsD.push(new Question("Pourquoi les fantômes sont-ils de si mauvais menteurs? :", [0, 0, 1, -1], ["Par ce qu'on les entends pas", "Par ce qu'on vois a travers eux", "Parce qu’on peut lire à travers eux", ""]));
+questionsD.push(new Question("Dans quel jeu appareît pour la première fois le King Boo? :", [0, 1, 0, -1], ["Mario party 3", "Luigi Mansion", "Mario Kart double Dash", ""]));
+questionsD.push(new Question("Quel est le personnage principal de 'Pat Patrouille'? :", [0, 1, 0, 0], ["Chase", "Ryder", "Rubble", "Marcus"]));
+questionsD.push(new Question("Combien de fois apparaît 'Scrappy doo' dans Scooby doo? :", [0, 0, 1, 0], ["8", "19", "16", "25"]));
+questionsD.push(new Question("Il vas faire tout noir!!! :", [0, 0, 1, -1], ["euh?", "ok", "ta gueule!!!", ""]));
+questionsD.push(new Question("Dans combien de License apparaît 'Terry Bogard?' :", [1, 0, 0, -1], ["12", "8", "3", ""]));
+questionsD.push(new Question("J'arrive à la sortie en direction des Hautes-Pyrénées d'ici 10 minutes. Que dois-je dire à la personne que je vais voir pour prévenir ? :", [0, 0, 1, -1], ["j'arrive bientôt", "je suis quasiment là", "je vais pas Tarber", ""]));
+questionsD.push(new Question("Il parait que les automobilistes les plus dangereux de France sont majoritairement issus de Haute-Garonne. Pourquoi ? :", [0, 0, 1, -1], ["il fallait bien mettre un département au pif", "parce que ces gens ont... nothing Toulouse", "c'était soit eux soit les Niçois", ""]));
+questionsD.push(new Question("Que signifie le nombre 2147483647 ? :", [1, 0, 1, -1], ["la population mondiale en 2030", "la valeur max d'un booléen en code", "mon compte en banque si j'étaps payé à faire des jeux de mots pourris", ""]));
+questionsD.push(new Question("Qu'est ce que la précompilation de tokens dans une API simulée en backend réactif distant? :", [0, 0, 1, -1], ["du chinois", "bon week-end", "tkt quelqu'un fera une veille dessus", ""]));
+questionsD.push(new Question("Qui est Sheik dans la série zelda? :", [1, 0, 0, 0], ["Zelda", "Link", "Ganon", "Sheik"]));
+questionsD.push(new Question("Comment naissent les Orcs de Warhammer? :", [0, 1, 0, -1], ["ils naissent simplement", "ils poussent", "ils popent", ""]));
+questionsD.push(new Question("Sur le flanc du pneu les témoins d'usure peuvent être signalés par? :", [1, 0, 1, 1], ["La mention TWI", "Un triangle", "La mention 'Témoin'", "Le logo du fabricant"]));
+questionsD.push(new Question("Quelle proposition ne désigne pas la valeur décimale du nombre 51? :", [0, 0, 1, 0], ["11011111", "33", "3101", "43"]));
+questionsD.push(new Question("En combien de cases est divisé la map de Zelda Wind Waker? :", [1, 0, 0, 0], ["49", "35", "64", "21"]));
+questionsD.push(new Question("Pourquoi Nox veut remonter le temps? :", [1, 1, 0, -1], ["Pour Réparer ses erreurs", "Pour sauver sa famille", "Pour faire le mal", ""]));
+questionsD.push(new Question("Quelle est la toute première console répertorier au monde? :", [1, 0, -1, -1], ["l'Odyssey de Magnavox", "l'Ataris PONG", "", ""]));
+questionsD.push(new Question("En quelle année a été lancé le TGV en France? :", [0, 0, 1, 0], ["1988", "1971", "1981", "1991"]));
+questionsD.push(new Question("Parmi 'abcd', quelle lettre qui ne peut pas être juste avant une voyelle est entre deux lettres qui ne se suivent pas mais ne précède pas une lettre qui est juste avant la lettre concernée? :", [1, 0, 0, 0], ["C", "A", "D", "B"]));
 
 questionsDb.push(questionsF);
 questionsDb.push(questionsM);
+questionsDb.push(questionsD);
 
 function Start(mode) {
 	jeu = new Jeu();
@@ -374,7 +406,6 @@ function Start(mode) {
 	document.getElementById("ReponseContainer").classList.remove("hidden");
 	document.getElementById("ValContainer").classList.remove("hidden");
 	document.getElementById("StartMenu").classList.add("hidden");
-
 
 	jeu.joueurActuel = 0;
 	jeu.ProchainJoueur();

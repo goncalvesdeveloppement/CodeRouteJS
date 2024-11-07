@@ -46,6 +46,7 @@ class Jeu {
 	joueurs = new Array();
 	joueurActuel = 1;
 	interval;
+	timeout;
 	mode = 0;
 
 	// Récupère le multiplicateur de points selon le temps écoulé (en 1/100 s)
@@ -72,6 +73,10 @@ class Jeu {
 
 	Valider() {
 		clearInterval(this.interval);
+		document.getElementsByTagName("audio")[0].pause();
+
+		document.getElementsByTagName("audio")[3].currentTime = 0;
+		document.getElementsByTagName("audio")[3].play();
 
 		// récup des réponses
 		let answers = new Array(4);
@@ -94,7 +99,15 @@ class Jeu {
 		let pointsBonus = this.GetPointsFromTime(time, answers);
 
 		this.joueurs[this.joueurActuel - 1].points += pointsBonus;
-		this.ProchainJoueur();
+
+		clearInterval(this.interval);
+
+		document.getElementById("CheckA").disabled = true;
+		document.getElementById("CheckB").disabled = true;
+		document.getElementById("CheckC").disabled = true;
+		document.getElementById("CheckD").disabled = true;
+
+		this.timeout = setTimeout(() => this.ProchainJoueur(), 2000);
 	}
 
 	ProchaineQuestion() {
@@ -135,20 +148,34 @@ class Jeu {
 		if (tempsActuel > 0)
 			tempsActuel--;
 
+		if (jeu.joueurs.length > 1)
+			document.getElementById("NomJoueur").innerHTML = "@" + jeu.joueurs[jeu.joueurActuel - 1].nom;
+
 		document.getElementById("Temps").innerHTML = "00:" + NumberFormat(Math.ceil(tempsActuel / 100));
 
 		if (tempsActuel == 0) {
-			document.getElementsByTagName("audio")[1].currentTime = 0;
-			document.getElementsByTagName("audio")[1].play();
-			document.getElementsByTagName("audio")[0].pause();
-			alert("TIME's UP !!!!!!");
+			document.getElementById("CheckA").disabled = true;
+			document.getElementById("CheckB").disabled = true;
+			document.getElementById("CheckC").disabled = true;
+			document.getElementById("CheckD").disabled = true;
+			document.getElementById("CheckA").checked = false;
+			document.getElementById("CheckB").checked = false;
+			document.getElementById("CheckC").checked = false;
+			document.getElementById("CheckD").checked = false;
+			document.getElementById("Temps").innerHTML = "<b style='color: #aa0000'>00:00</b>";
 
 			tempsActuel = this.tempsReponses;
-			this.ProchainJoueur();
+
+			clearInterval(this.interval);
+			this.timeout = setTimeout(() => this.ProchainJoueur(), 2000);
 		}
 	}
 
 	ProchainJoueur() {
+		document.getElementById("CheckA").disabled = false;
+		document.getElementById("CheckB").disabled = false;
+		document.getElementById("CheckC").disabled = false;
+		document.getElementById("CheckD").disabled = false;
 		document.getElementById("CheckA").checked = false;
 		document.getElementById("CheckB").checked = false;
 		document.getElementById("CheckC").checked = false;
@@ -162,9 +189,6 @@ class Jeu {
 		if (this.joueurActuel > this.joueurs.length) {
 			this.ProchaineQuestion();
 		}
-
-		if (jeu.joueurs.length > 1)
-			alert("à toi, " + this.joueurs[this.joueurActuel - 1].nom + " !");
 
 		document.getElementsByTagName("audio")[0].currentTime = 0;
 		document.getElementsByTagName("audio")[0].play();

@@ -226,7 +226,7 @@ let idQuestion = 1;
 const questionsDb = new Array();
 const questionsF = new Array();
 const questionsM = new Array();
-const questionH = new Array();
+const questionsH = new Array();
 
 questionsF.push(new Question("Je vois un panneau stop je m'arrête ?", [1, 0, -1, -1], ["Oui", "Non", "", ""]));
 questionsF.push(new Question("Comment appelle-t-on un poisson qui sort de l'eau et traverse la route?", [1, 0, 0, -1], ["Un piéton", "Un poisson volant", "Un pied de thon", ""]));

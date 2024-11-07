@@ -100,8 +100,30 @@ class Jeu {
 	ProchaineQuestion() {
 		if (this.numQuestionActuelle >= this.questions.length) {
 			this.joueurs.sort(compare);
-			for (let i = 0; i < this.joueurs.length; i++)
-				alert("#" + (this.joueurs.length - i) + " : " + this.joueurs[i].nom + " — " + this.joueurs[i].points);
+			clearInterval(this.interval);
+			this.interval = null;
+			
+			document.getElementsByTagName("audio")[0].pause();
+			document.getElementsByTagName("audio")[1].pause();
+
+			document.getElementsByTagName("audio")[2].play();
+
+			let str = "";
+
+			if (this.joueurs.length > 1) {
+				for (let i = 0; i < this.joueurs.length; i++)
+					str += "#" + (i + 1) + " : " + this.joueurs[i].nom + " — " + this.joueurs[i].points + "<br>";
+			}
+			else {
+				str = this.joueurs[0].nom + ", vous avez obtenu " + jeu.joueurs[0].points + " points. Bravo.";
+			}
+
+			document.getElementById("QuestionContainer").classList.add("hidden");
+			document.getElementById("ReponseContainer").classList.add("hidden");
+			document.getElementById("ValContainer").classList.add("hidden");
+			document.getElementById("End").classList.remove("hidden");
+
+			document.getElementById("ClassementFinal").innerHTML = str;
 		}
 		else {
 			this.joueurActuel = 1;
@@ -186,21 +208,23 @@ class Jeu {
 }
 
 class Joueur {
-	nom = "toto";
+	nom = "anonyme";
 	points = 0;
 
 	constructor(nom) {
-		this.nom = nom;
+		if (nom != "")
+			this.nom = nom;
+
 		this.points = 0;
 	}
 }
 
 function compare(a, b) {
 	if (a.points < b.points) {
-		return -1;
+		return 1;
 	}
 	if (a.points > b.points) {
-		return 1;
+		return -1;
 	}
 	return 0;
 }
@@ -272,7 +296,7 @@ questionsM.push(new Question("Ce véhicule stationné risque :", [1, 0, 1, 1], [
 questionsM.push(new Question("J'achète une voiture, ma plaque d'immatriculation :", [0, 0, 1, 0], ["Peut être jaune à l'arrière", "Doit systématiquement être renouvelée", "Peut être associée au département de mon choix", "Peut contenir n'importe quelle lettre de l'alphabet"]));
 questionsM.push(new Question("Cette plaque signifie :", [0, 0, 1, -1], ["Que le véhicule est fabriqué en France", "Que le propriétaire habite dans le 71", "Que le véhicule est répertorié au niveau national", ""]));
 questionsM.push(new Question("Je passe au feu orange. Je risque une perte de points :", [0, 1, -1, -1], ["Oui", "Non", "", ""]));
-questionsM.push(new Question("Pour éviter un accident sur un coup de fatigue, je peux :", [1, 0, -1, -1], ["Emprunter des itinéraires plus rapides", "M'arrêter régulièrement", "Respecter les limitations de vitesse", "Etre prudent (c'est vraiment ma voiture donc ça n'arrive pas qu'aux autres !)"]));
+questionsM.push(new Question("Pour éviter un accident sur un coup de fatigue, je peux :", [1, 1, 1, 1], ["Emprunter des itinéraires plus rapides", "M'arrêter régulièrement", "Respecter les limitations de vitesse", "Etre prudent (c'est vraiment ma voiture sur la photo donc ça n'arrive pas qu'aux autres !🙏🏻)"]));
 questionsM.push(new Question("Un panneau carré indique une obligation : ", [0, 1, -1, -1], ["Oui", "Non", "", ""]));
 questionsM.push(new Question("Dans cette situation :", [1, 1, 1, -1], ["Je quitte l'agglomération de Pradelles", "Je suis sur un axe prioritaire", "Je suis sur la route nationale N°88", ""]));
 questionsM.push(new Question("Ce panneau m'indique que je dois rouler à 50 km/h ou moins :", [1, 0, -1, -1], ["Oui", "Non", "", ""]));
@@ -299,19 +323,34 @@ idQuestion = 1;
 questionsDb.push(questionsF);
 questionsDb.push(questionsM);
 
-function Start() {
+function Start(mode) {
 	jeu = new Jeu();
-	jeu.mode = 0;
+	jeu.mode = mode;
+	jeu.totalQuestions = document.getElementById("GameLength").value;
 	jeu.ChoixQuestions();
+
+	jeu.joueurs.push(new Joueur(document.getElementById("NomJ1").value));
+
+	if (document.getElementById("J2").checked) {
+		jeu.joueurs.push(new Joueur(document.getElementById("NomJ2").value));
+
+
+		if (document.getElementById("J3").checked) {
+			jeu.joueurs.push(new Joueur(document.getElementById("NomJ3").value));
+
+
+
+			if (document.getElementById("J4").checked) {
+				jeu.joueurs.push(new Joueur(document.getElementById("NomJ4").value));
+			}
+		}
+	}
 
 	document.getElementById("QuestionContainer").classList.remove("hidden");
 	document.getElementById("ReponseContainer").classList.remove("hidden");
 	document.getElementById("ValContainer").classList.remove("hidden");
 	document.getElementById("StartMenu").classList.add("hidden");
 
-	jeu.joueurs.push(new Joueur("nath"));
-	jeu.joueurs.push(new Joueur("antho"));
-	jeu.joueurs.push(new Joueur("rémi"));
 
 	jeu.joueurActuel = 0;
 	jeu.ProchainJoueur();

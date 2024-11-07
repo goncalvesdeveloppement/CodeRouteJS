@@ -13,8 +13,21 @@
 
 <body>
     <div id="StartMenu">
-        MarioCode 9 deluxe <br>Push start
-        <button onclick="Start()">start.</button>
+        MarioCode 9 deluxe <br><br>Joueurs :<br>
+        <input type="checkbox" name="J1" id="J1" checked disabled>
+        <input type="text" name="NomJ1" id="NomJ1" placeholder="nom joueur 1"><br>
+        <input type="checkbox" name="J2" id="J2">
+        <input type="text" name="NomJ2" id="NomJ2" placeholder="nom joueur 2"><br>
+        <input type="checkbox" name="J3" id="J3">
+        <input type="text" name="NomJ3" id="NomJ3" placeholder="nom joueur 3"><br>
+        <input type="checkbox" name="J4" id="J4">
+        <input type="text" name="NomJ4" id="NomJ4" placeholder="nom joueur 4"><br><br>
+
+        <input type="number" value="10" name="length" id="GameLength" min="7" max="30"><br>
+        <label for="length"> — Longueur de la partie (en nombre de questions)</label><br>
+        <button onclick="Start(0)">👶🏻 FACILE.</button><br>
+        <button onclick="Start(1)">🤨 NORMAL.</button><br>
+        <button onclick="Start(2)">👿 HARDCORE !</button>
     </div>
     <div id="QuestionContainer" class="hidden">
         <div id="Image">
@@ -52,8 +65,15 @@
             <input onclick="jeu.Valider()" id="VALIDATION" type="submit" value="Valider">
         </div>
     </div>
+    <div id="End" class="hidden">
+        <h1>Partie terminée !</h1>
+        <div id="ClassementFinal">
+
+        </div>
+    </div>
     <audio src="./assets/tick.mp3"></audio>
     <audio src="./assets/stop.mp3"></audio>
+    <audio src="./assets/gagne.mp3"></audio>
 </body>
 
 <script src="./script.js"></script>

@@ -301,20 +301,20 @@ questionsM.push(new Question("Un panneau carré indique une obligation : ", [0, 
 questionsM.push(new Question("Dans cette situation :", [1, 1, 1, -1], ["Je quitte l'agglomération de Pradelles", "Je suis sur un axe prioritaire", "Je suis sur la route nationale N°88", ""]));
 questionsM.push(new Question("Ce panneau m'indique que je dois rouler à 50 km/h ou moins :", [1, 0, -1, -1], ["Oui", "Non", "", ""]));
 questionsM.push(new Question("Quel panneau me signale un stationnement à durée limitée ?", [0, 1, 0, -1], ["Le panneau de gauche", "Le panneau central", "Le panneau de droite", ""]));
-// questionsM.push(new Question("Je vais à Arzens. Je suivrai la départementale N°33 :", [1, 0, -1, -1], ["Oui", "Non", "", ""]));
-// questionsM.push(new Question("Je vais à Arzens. Je suivrai la départementale N°33 :", [1, 0, -1, -1], ["Oui", "Non", "", ""]));
-// questionsM.push(new Question("Je vais à Arzens. Je suivrai la départementale N°33 :", [1, 0, -1, -1], ["Oui", "Non", "", ""]));
-// questionsM.push(new Question("Je vais à Arzens. Je suivrai la départementale N°33 :", [1, 0, -1, -1], ["Oui", "Non", "", ""]));
-// questionsM.push(new Question("Je vais à Arzens. Je suivrai la départementale N°33 :", [1, 0, -1, -1], ["Oui", "Non", "", ""]));
-// questionsM.push(new Question("Je vais à Arzens. Je suivrai la départementale N°33 :", [1, 0, -1, -1], ["Oui", "Non", "", ""]));
-// questionsM.push(new Question("Je vais à Arzens. Je suivrai la départementale N°33 :", [1, 0, -1, -1], ["Oui", "Non", "", ""]));
-// questionsM.push(new Question("Je vais à Arzens. Je suivrai la départementale N°33 :", [1, 0, -1, -1], ["Oui", "Non", "", ""]));
-// questionsM.push(new Question("Je vais à Arzens. Je suivrai la départementale N°33 :", [1, 0, -1, -1], ["Oui", "Non", "", ""]));
-// questionsM.push(new Question("Je vais à Arzens. Je suivrai la départementale N°33 :", [1, 0, -1, -1], ["Oui", "Non", "", ""]));
-// questionsM.push(new Question("Je vais à Arzens. Je suivrai la départementale N°33 :", [1, 0, -1, -1], ["Oui", "Non", "", ""]));
-// questionsM.push(new Question("Je vais à Arzens. Je suivrai la départementale N°33 :", [1, 0, -1, -1], ["Oui", "Non", "", ""]));
-// questionsM.push(new Question("Je vais à Arzens. Je suivrai la départementale N°33 :", [1, 0, -1, -1], ["Oui", "Non", "", ""]));
-// questionsM.push(new Question("Je vais à Arzens. Je suivrai la départementale N°33 :", [1, 0, -1, -1], ["Oui", "Non", "", ""]));
+questionsM.push(new Question("Je peux conduire un scooter 125 avec mon permis B en ayant passé une formation supplémentaire :", [1, 0, -1, -1], ["Oui", "Non", "", ""]));
+questionsM.push(new Question("Les apps de signalements de radar sont illégales. Il existe une exeption autorisant d'utiliser le téléphone au volant pour signaler un danger sur Waze.", [0, 0, 0, 1], ["Vrai et vrai", "Vrai et faux", "Faux et vrai", "Faux et faux"]));
+questionsM.push(new Question("Pour regonfler les pneus de cette incroyable citadine rouge, je dois me référer aux indicateurs présents dans l'encadrement de portière conducteur :", [1, 0, -1, -1], ["Oui", "Non", "", ""]));
+questionsM.push(new Question("Ma voiture neuve est équipée de détecteurs assistant ma conduite, notamment lors des débordements de voie :", [0, 1, 1, -1], ["Je lui fais confiance, le but est que je me sente passager", "Ce sont des aides à la conduite mais en aucun cas des substitutions", "Je ne devrais pas m'y habituer car toutes les voitures n'en bénéficient pas", ""]));
+questionsM.push(new Question("J'entre sur une autoroute de manière imminente :", [0, 0, 1, -1], ["Je vérifie l'angle mort gauche, j'accélère puis je mets le clignotant gauche", "J'accélère, je mets mon clignotant gauche puis je regarde l'angle mort gauche", "Je mets mon clignotant gauche, je regarde mon clignotant gauche puis j'accélère en étant vigilant", ""]));
+questionsM.push(new Question("Le contrôle technique est valable 2 ans pour toutes les voitures :", [0, 1, -1, -1], ["Oui", "Non", "", ""]));
+questionsM.push(new Question("Je n'ai plus envie d'aller à Tarbes. Je reste sur l'A64 :", [1, 0, -1, -1], ["Oui", "Non", "", ""]));
+questionsM.push(new Question("Ce panneau indique :", [0, 1, 0, -1], ["L'entrée dans un lieu-dit dont le logo est un N stylisé", "Une succession de virages dangereux dont le premier est forcément à droite", "Une obligation de ralentir", ""]));
+questionsM.push(new Question("Afin de jouir librement de mon permis de conduire, je m'assure de :", [1, 1, 1, 0], ["Avoir obtenu un minimum de 20 points à l'examen sans erreur éliminatoire", "Avoir fêté mon dix-huitième anniversaire révolu", "Avoir un véhicule en ma possession légale ou assuré pour que je puisse le conduire", "Apposer le disque A sur le capot de mon véhicule"]));
+questionsM.push(new Question("Certains radars automatiques peuvent :", [1, 0, 1, -1], ["Enregistrer les contraventions liées au non-port de la ceinture", "Enregistrer les nuisances sonores pour musique trop forte", "Capter un excès de vitesse de moins de 10 km/h", ""]));
+questionsM.push(new Question("Quel indicateur dois-je vérifier lorsque je me trouve en position 3 ?", [0, 0, 1, -1], ["Le niveau d'huile moteur", "Le niveau de liquide de direction assistée", "Le niveau de liquide de freinage", ""]));
+questionsM.push(new Question("Un voyant de couleur orange peur signifier :", [1, 1, 0, 1], ["Un avertissement sur un potentiel danger imminent", "Un éclairage pouvant gêner d'autres automobilistes", "La nécessité de m'arrêter immédiatement", "Un réservoir de carburant presque vide"]));
+questionsM.push(new Question("Le bonhomme est devenu rouge, mais je n'ai pas fini de traverser :", [0, 0, 1, -1], ["Je m'arrête en attendant qu'il redevienne vert", "Je cours à toute vitesse avant de me faire écraser", "Je termine de traverser en accélérant un peu le pas, mais en restant prudent", ""]));
+questionsM.push(new Question("Ce nouveau panneau a été mis en vigueur depuis 2024. Il indique :", [1, 0, 0, 0], ["Une zone dans laquelle je dois prendre des mesures particulières de conduite écologique", "Une zone très fréquentée par les Renault", "Une zone interdite aux Renault", "Une zone réservée aux Renault"]));
 
 idQuestion = 1;
 

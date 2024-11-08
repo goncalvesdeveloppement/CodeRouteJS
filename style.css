@@ -460,7 +460,7 @@ label {
 #RecapQuestions .question--right {
     display: flex;
     width: calc(100% - 200px);
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
 }
 

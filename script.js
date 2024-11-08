@@ -143,7 +143,7 @@ class Jeu {
 			document.getElementById("End").classList.remove("hidden");
 
 			if (jeu.joueurs.length == 1) {
-				document.getElementById("PointsSoloNumber").innerHTML = emojis[this.joueurs[0].couleur - 1] + " " + this.joueurs[0].points + " points, " + this.joueurs[0].nom + ".";
+				document.getElementById("PointsSoloNumber").innerHTML = this.joueurs[0].points + " points" + (this.joueurs[0].nom != "Anonyme" ? ", " + this.joueurs[0].nom + "." : ".");
 			}
 			else {
 				document.getElementById("ClassementFinal").classList.remove("hidden");

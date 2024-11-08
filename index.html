@@ -13,12 +13,13 @@
 
 <body>
     <div id="GlobalMenu">
+        <button id="Replay" class="hidden" onclick="location.reload()">↩</button>
         <button id="sound" onclick="toggleSound()">🔊</button>
 
     </div>
     <div id="StartMenu">
         <div id="GameTitle">
-            logo du jeu
+            
         </div>
 
         <div id="PlayersSetup">
@@ -115,9 +116,64 @@
     </div>
     <div id="End" class="hidden">
         <h1>Partie terminée !</h1>
-        <div id="ClassementFinal">
-
+        <div id="ClassementFinal" class="hidden">
+            <section id="Premier">
+                <div class="position">#1</div>
+                <div class="position--right">
+                    <div class="" id="NomPremier">😀 Nath</div>
+                    <div id="PointsPremier">100 points</div>
+                </div>
+            </section>
+            <section id="Deuxieme">
+                <div id="Position2" class="position">#2</div>
+                <div class="position--right">
+                    <div class="" id="NomDeuxieme">😀 Nath</div>
+                    <div id="PointsDeuxieme">100 points</div>
+                </div>
+            </section>
+            <section id="Troisieme">
+                <div id="Position3" class="position">#3</div>
+                <div class="position--right">
+                    <div class="" id="NomTroisieme">😀 Nath</div>
+                    <div id="PointsTroisieme">100 points</div>
+                </div>
+            </section>
         </div>
+        <div class="" id="PointsSolo">
+            <h2 id="PointsSoloNumber">100 points.</h2>
+            <p>Bravo mais t'aurais pu faire mieux en vrai...</p>
+        </div>
+        <section id="RecapQuestions">
+            <div class="question" id="QR">
+                <div class="question--left">
+                    <div id="QREnonce" class="recap_enonce">Question 01 :</div>
+                    <div>✅ <span id="BonnesReps"></span></div>
+                </div>
+                <div class="question--right">
+                    <div class="question--right--joueur" id="QRP1">
+                        <div id="RNameP1" class="nom">🤣 Rémi</div>
+                        <div id="RPointsP1" class="bon">+52</div>
+                    </div>
+                    <div class="question--right--joueur hidden" id="QRP2">
+                        <div id="RNameP2" class="nom">🤣 Rémi</div>
+                        <div id="RPointsP2" class="bon">+52</div>
+                    </div>
+                    <div class="question--right--joueur hidden" id="QRP3">
+                        <div id="RNameP3" class="nom">🤣 Rémi</div>
+                        <div id="RPointsP3" class="bon">+52</div>
+                    </div>
+                    <div class="question--right--joueur hidden" id="QRP4">
+                        <div id="RNameP4" class="nom">🤣 Rémi</div>
+                        <div id="RPointsP4" class="bon">+52</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="RecapBrowser">
+                <button onclick= "recapSwitch(-1)" id="Prev" onclick="">⬅ Question précédente</button>
+                <button onclick= "recapSwitch(1)" id="Next" onclick="">Question suivante ➡</button>
+            </div>
+        </section>
     </div>
     <audio src="./assets/tick.mp3"></audio>
     <audio src="./assets/stop.mp3"></audio>

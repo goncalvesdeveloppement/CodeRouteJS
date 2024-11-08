@@ -3,7 +3,8 @@ let tempsActuel = 0;
 let jeu = undefined;
 let questionsNumber = 5;
 let gameMode = 0;
-let emojis = ["	&#128539;", "&#128580;", "&#129300;", "&#128555;"];
+let emojis = ["&#128539;", "&#128580;", "&#129300;", "&#128555;"];
+let numQuestionRecap = 1;
 
 function resize() {
 	var coef = (innerWidth >= innerHeight * (16 / 9) ? (innerHeight / staticHeight) : (innerWidth / staticWidth));
@@ -80,10 +81,10 @@ class Jeu {
 		document.getElementById("VALIDATION").value = "Réponses soumises.";
 		document.getElementById("VALIDATION").disabled = true;
 		clearInterval(this.interval);
-		document.getElementsByTagName("audio")[0].pause();
-
+		
 		document.getElementsByTagName("audio")[3].currentTime = 0;
 		document.getElementsByTagName("audio")[3].play();
+		document.getElementsByTagName("audio")[0].pause();
 
 		// récup des réponses
 		let answers = new Array(4);
@@ -106,6 +107,7 @@ class Jeu {
 		let pointsBonus = this.GetPointsFromTime(time, answers);
 
 		this.joueurs[this.joueurActuel - 1].points += pointsBonus;
+		this.joueurs[this.joueurActuel - 1].reponses.push(pointsBonus);
 
 		clearInterval(this.interval);
 
@@ -118,7 +120,9 @@ class Jeu {
 			clearInterval(this.interval);
 			this.interval = null;
 
-			document.getElementsByTagName("audio")[0].pause();
+			document.getElementById("Replay").classList.remove("hidden");
+
+			document.getElementsByTagName("audio")[0].volume = 0;
 			document.getElementsByTagName("audio")[1].pause();
 
 			document.getElementsByTagName("audio")[2].play();
@@ -138,7 +142,41 @@ class Jeu {
 			document.getElementById("ValContainer").classList.add("hidden");
 			document.getElementById("End").classList.remove("hidden");
 
-			document.getElementById("ClassementFinal").innerHTML = str;
+			if (jeu.joueurs.length == 1) {
+				document.getElementById("PointsSoloNumber").innerHTML = emojis[this.joueurs[0].couleur - 1] + " " + this.joueurs[0].points + " points, " + this.joueurs[0].nom + ".";
+			}
+			else {
+				document.getElementById("ClassementFinal").classList.remove("hidden");
+				document.getElementById("PointsSolo").classList.add("hidden");
+
+				// Premier
+				document.getElementById("NomPremier").innerHTML = emojis[this.joueurs[0].couleur - 1] + " " + this.joueurs[0].nom;
+				document.getElementById("NomPremier").classList.add("couleur" + this.joueurs[0].couleur);
+				document.getElementById("PointsPremier").innerHTML = this.joueurs[0].points + " points";
+
+				// Deuxième
+				document.getElementById("NomDeuxieme").innerHTML = emojis[this.joueurs[1].couleur - 1] + " " + this.joueurs[1].nom;
+				document.getElementById("NomDeuxieme").classList.add("couleur" + this.joueurs[1].couleur);
+				document.getElementById("PointsDeuxieme").innerHTML = this.joueurs[1].points + " points";
+
+				if (this.joueurs[1].points == this.joueurs[0].points)
+					document.getElementById("Position2").innerHTML = "#1";
+
+				// Troisième
+				if (jeu.joueurs.length > 2) {
+					document.getElementById("NomTroisieme").innerHTML = emojis[this.joueurs[2].couleur - 1] + " " + this.joueurs[2].nom;
+					document.getElementById("NomTroisieme").classList.add("couleur" + this.joueurs[2].couleur);
+					document.getElementById("PointsTroisieme").innerHTML = this.joueurs[2].points + " points";
+
+					if (this.joueurs[2].points == this.joueurs[1].points)
+						document.getElementById("Position3").innerHTML = document.getElementById("Position2").innerHTML;
+				}
+				else {
+					document.getElementById("Troisieme").classList.add("hidden");
+				}
+			}
+
+			this.RecapQuestion(1);
 		}
 		else {
 			this.joueurActuel = 1;
@@ -150,10 +188,10 @@ class Jeu {
 		if (tempsActuel > 0)
 			tempsActuel--;
 
-			if (jeu.joueurs[0].nom != "Anonyme") {
-				document.getElementById("NomJoueur").innerHTML = emojis[this.joueurActuel - 1] + " " + this.joueurs[this.joueurActuel - 1].nom;
-				document.getElementById("NomJoueur").classList.add("couleur" + this.joueurs[this.joueurActuel - 1].couleur);
-			}
+		if (jeu.joueurs[0].nom != "Anonyme") {
+			document.getElementById("NomJoueur").innerHTML = emojis[this.joueurActuel - 1] + " " + this.joueurs[this.joueurActuel - 1].nom;
+			document.getElementById("NomJoueur").classList.add("couleur" + this.joueurs[this.joueurActuel - 1].couleur);
+		}
 
 		document.getElementById("Temps").innerHTML = "00:" + NumberFormat(Math.ceil(tempsActuel / 100));
 
@@ -187,12 +225,12 @@ class Jeu {
 
 		this.interval = setInterval(() => this.CheckRemainingTime(), 10);
 
+		document.getElementsByTagName("audio")[0].currentTime = 0;
+		document.getElementsByTagName("audio")[0].play();
+
 		if (this.joueurActuel > this.joueurs.length) {
 			this.ProchaineQuestion();
 		}
-
-		document.getElementsByTagName("audio")[0].currentTime = 0;
-		document.getElementsByTagName("audio")[0].play();
 
 		this.AfficherQuestion(this.numQuestionActuelle);
 	}
@@ -230,11 +268,58 @@ class Jeu {
 			}
 		}
 	}
+
+	RecapQuestion() {
+		document.getElementById("QREnonce").innerHTML = "Question " + NumberFormat(numQuestionRecap) + " : " + this.questions[numQuestionRecap - 1].enonce;
+
+		let str = "";
+		const alphabet = "ABCD";
+
+		for (let i = 0; i < 4; i++) {
+			if (this.questions[numQuestionRecap - 1].defaultAnswers[i] == 1)
+				str += alphabet[i] + ", ";
+		}
+
+		str = str.substring(0, str.length - 2);
+		document.getElementById("BonnesReps").innerHTML = str;
+
+		this.joueurs.sort(compareColor);
+		document.getElementById("RNameP1").innerHTML = this.joueurs[0].nom;
+		document.getElementById("RNameP1").classList.add("couleur" + this.joueurs[0].couleur);
+		document.getElementById("RPointsP1").innerHTML = this.joueurs[0].reponses[numQuestionRecap - 1] > 0 ? "+" + this.joueurs[0].reponses[numQuestionRecap - 1] : "❌";
+
+
+		if (this.joueurs.length >= 2) {
+			document.getElementById("QRP2").classList.remove("hidden");
+			document.getElementById("RNameP2").innerHTML = this.joueurs[1].nom;
+			document.getElementById("RNameP2").classList.add("couleur" + this.joueurs[1].couleur);
+			document.getElementById("RPointsP2").innerHTML = this.joueurs[1].reponses[numQuestionRecap - 1] > 0 ? "+" + this.joueurs[1].reponses[numQuestionRecap - 1] : "❌";
+
+			if (this.joueurs.length >= 3) {
+				document.getElementById("QRP3").classList.remove("hidden");
+				document.getElementById("RNameP3").innerHTML = this.joueurs[2].nom;
+				document.getElementById("RNameP3").classList.add("couleur" + this.joueurs[2].couleur);
+
+				document.getElementById("RPointsP3").innerHTML = this.joueurs[2].reponses[numQuestionRecap - 1] > 0 ? "+" + this.joueurs[2].reponses[numQuestionRecap - 1] : "❌";
+
+				if (this.joueurs.length >= 4) {
+					document.getElementById("QRP4").classList.remove("hidden");
+					document.getElementById("RNameP4").innerHTML = this.joueurs[3].nom;
+					document.getElementById("RNameP4").classList.add("couleur" + this.joueurs[3].couleur);
+					document.getElementById("RPointsP4").innerHTML = this.joueurs[3].reponses[numQuestionRecap - 1] > 0 ? "+" + this.joueurs[3].reponses[numQuestionRecap - 1] : "❌";
+				}
+			}
+		}
+		else {
+			document.getElementById("RNameP1").classList.add("hidden");
+		}
+	}
 }
 
 class Joueur {
 	nom = "anonyme";
 	points = 0;
+	reponses = new Array();
 
 	constructor(nom, couleur = 0) {
 		if (nom != "")
@@ -251,6 +336,16 @@ function compare(a, b) {
 	}
 	if (a.points > b.points) {
 		return -1;
+	}
+	return 0;
+}
+
+function compareColor(a, b) {
+	if (a.couleur < b.couleur) {
+		return -1;
+	}
+	if (a.couleur > b.couleur) {
+		return 1;
 	}
 	return 0;
 }
@@ -284,6 +379,17 @@ function toggleQuestionsNumber() {
 	questionsNumber = questionsNumber > 30 ? 5 : questionsNumber;
 
 	document.getElementById("QuestionsNumber").innerHTML = "Jouer " + questionsNumber + " questions"
+}
+
+function recapSwitch(incr) {
+	numQuestionRecap += incr;
+
+	if (numQuestionRecap > jeu.totalQuestions)
+		numQuestionRecap = 1;
+	else if (numQuestionRecap == 0)
+		numQuestionRecap = jeu.totalQuestions;
+
+	jeu.RecapQuestion(numQuestionRecap);
 }
 
 function NumberFormat(number, digits = 2) {
@@ -411,6 +517,8 @@ questionsDb.push(questionsM);
 questionsDb.push(questionsD);
 
 function Start(mode) {
+	document.getElementsByTagName("html")[0].style.backgroundImage = "url('./assets/" + mode + "/bg.jpg')";
+
 	jeu = new Jeu();
 	jeu.mode = mode;
 	jeu.totalQuestions = questionsNumber;

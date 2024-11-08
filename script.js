@@ -40,7 +40,7 @@ class Question {
 
 class Jeu {
 	totalQuestions = 40;
-	tempsReponses = 1500; // en 1/100 secondes
+	tempsReponses = 3000; // en 1/100 secondes
 	questions = new Array();
 	numQuestionActuelle = 1;
 	joueurs = new Array();

@@ -15,12 +15,14 @@ class Question {
 	points = 1;
 	defaultAnswers = [1, 0, 0, 0]; // 1 = bonne réponse, 0 = mauvaise réponse, -1 = réponse masquée
 	answersText = ["", "", "", ""];
+	time = 3000;
 
-	constructor(enonce, answers, answersText) {
+	constructor(enonce, answers, answersText, time = 3000) {
 		this.id = idQuestion++;
 		this.enonce = enonce;
 		this.defaultAnswers = answers;
 		this.answersText = answersText;
+		this.time = time;
 		this.points = 1; // changer plus tard
 	}
 
@@ -51,7 +53,7 @@ class Jeu {
 
 	// Récupère le multiplicateur de points selon le temps écoulé (en 1/100 s)
 	GetPointsFromTime(timeElapsed, answers) {
-		let coef = (Math.exp(-(0.003) * timeElapsed) * 100) + 5;
+		let coef = -0.0328 * timeElapsed + 103.28;
 		let points = this.questions[this.numQuestionActuelle - 1].points;
 
 		return Math.round((this.questions[this.numQuestionActuelle - 1].IsCorrect(answers) ? points * coef : 0));

@@ -12,6 +12,10 @@
 </head>
 
 <body>
+    <div id ="GlobalMenu">
+        <button id="sound" onclick="toggleSound()">🔊</button>
+
+    </div>
     <div id="StartMenu">
         MarioCode 9 deluxe <br><br>Joueurs :<br>
         <input type="checkbox" name="J1" id="J1" checked disabled>
@@ -27,7 +31,7 @@
         <label for="length"> — Longueur de la partie (en nombre de questions)</label><br>
         <button onclick="Start(0)">👶🏻 FACILE.</button><br>
         <button onclick="Start(1)">🤨 NORMAL.</button><br>
-        <button onclick="Start(2)">👿 HARDCORE !</button>
+        <button onclick="Start(2)">👿 HARDCORE !</button> 
     </div>
     <div id="QuestionContainer" class="hidden">
         <div id="Image">

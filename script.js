@@ -257,7 +257,22 @@ function compare(a, b) {
 	return 0;
 }
 
-
+function toggleSound(){
+	if (document.getElementById("sound").innerHTML == "🔊"){
+		document.getElementById("sound").innerHTML = "🔇";
+		document.getElementsByTagName("audio")[0].volume = 0;
+		document.getElementsByTagName("audio")[1].volume = 0;
+		document.getElementsByTagName("audio")[2].volume = 0;
+		document.getElementsByTagName("audio")[3].volume = 0;
+	}
+	else {
+		document.getElementById("sound").innerHTML = "🔊";
+		document.getElementsByTagName("audio")[0].volume = 1;
+		document.getElementsByTagName("audio")[1].volume = 1;
+		document.getElementsByTagName("audio")[2].volume = 1;
+		document.getElementsByTagName("audio")[3].volume = 1;
+	}
+}
 
 function NumberFormat(number, digits = 2) {
 	if ((number + "").length < digits) {

@@ -1,6 +1,8 @@
 let staticWidth = 900, staticHeight = 720;
 let tempsActuel = 0;
 let jeu = undefined;
+let questionsNumber = 5;
+let gameMode = 0;
 
 function resize() {
 	var coef = (innerWidth >= innerHeight * (16 / 9) ? (innerHeight / staticHeight) : (innerWidth / staticWidth));
@@ -257,6 +259,13 @@ function compare(a, b) {
 	return 0;
 }
 
+function toggleMode() {
+	gameMode++;
+	gameMode %= questionsDb.length;
+
+	document.getElementById("ModeSwitch").innerHTML = modes[gameMode];
+}
+
 function toggleSound(){
 	if (document.getElementById("sound").innerHTML == "🔊"){
 		document.getElementById("sound").innerHTML = "🔇";
@@ -274,6 +283,13 @@ function toggleSound(){
 	}
 }
 
+function toggleQuestionsNumber() {
+	questionsNumber += 5;
+	questionsNumber = questionsNumber > 30 ? 5 : questionsNumber;
+
+	document.getElementById("QuestionsNumber").innerHTML = "Jouer " + questionsNumber + " questions"
+}
+
 function NumberFormat(number, digits = 2) {
 	if ((number + "").length < digits) {
 		let missingDigits = digits - (number + "").length;
@@ -288,6 +304,8 @@ function NumberFormat(number, digits = 2) {
 
 	return number + "";
 }
+
+let modes = ["👶🏻 Mode FACILE.", "😐 Mode NORMAL.", "👿 Mode HARDCORE !!!"]
 
 let idQuestion = 1;
 const questionsDb = new Array();
@@ -399,21 +417,21 @@ questionsDb.push(questionsD);
 function Start(mode) {
 	jeu = new Jeu();
 	jeu.mode = mode;
-	jeu.totalQuestions = document.getElementById("GameLength").value;
+	jeu.totalQuestions = questionsNumber;
 	jeu.ChoixQuestions();
 
 	jeu.joueurs.push(new Joueur(document.getElementById("NomJ1").value));
 
-	if (document.getElementById("J2").checked) {
+	if (document.getElementById("NomJ2").value != "") {
 		jeu.joueurs.push(new Joueur(document.getElementById("NomJ2").value));
 
 
-		if (document.getElementById("J3").checked) {
+		if (document.getElementById("NomJ3").value != "") {
 			jeu.joueurs.push(new Joueur(document.getElementById("NomJ3").value));
 
 
 
-			if (document.getElementById("J4").checked) {
+			if (document.getElementById("NomJ4").value != "") {
 				jeu.joueurs.push(new Joueur(document.getElementById("NomJ4").value));
 			}
 		}

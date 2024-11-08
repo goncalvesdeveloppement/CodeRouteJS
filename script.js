@@ -210,11 +210,11 @@ class Jeu {
 
 			document.getElementsByTagName("img")[0].src = "./assets/" + this.mode + "/" + this.questions[numQuestion].id + ".jpg";
 
-			document.getElementById("A").innerHTML = this.questions[numQuestion].answersText[0];
-			document.getElementById("B").innerHTML = this.questions[numQuestion].answersText[1];
+			document.getElementById("TextA").innerHTML = this.questions[numQuestion].answersText[0];
+			document.getElementById("TextB").innerHTML = this.questions[numQuestion].answersText[1];
 
 			if (this.questions[numQuestion].defaultAnswers[2] > -1) {
-				document.getElementById("C").innerHTML = this.questions[numQuestion].answersText[2];
+				document.getElementById("TextC").innerHTML = this.questions[numQuestion].answersText[2];
 				document.getElementById("C").classList.remove("hidden");
 			}
 			else {
@@ -222,7 +222,7 @@ class Jeu {
 			}
 
 			if (this.questions[numQuestion].defaultAnswers[3] > -1) {
-				document.getElementById("D").innerHTML = this.questions[numQuestion].answersText[3];
+				document.getElementById("TextD").innerHTML = this.questions[numQuestion].answersText[3];
 				document.getElementById("D").classList.remove("hidden");
 			}
 			else {

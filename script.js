@@ -3,6 +3,7 @@ let tempsActuel = 0;
 let jeu = undefined;
 let questionsNumber = 5;
 let gameMode = 0;
+let emojis = ["	&#128539;", "&#128580;", "&#129300;", "&#128555;"];
 
 function resize() {
 	var coef = (innerWidth >= innerHeight * (16 / 9) ? (innerHeight / staticHeight) : (innerWidth / staticWidth));
@@ -76,6 +77,7 @@ class Jeu {
 	}
 
 	Valider() {
+		document.getElementById("VALIDATION").value = "Réponses soumises.";
 		document.getElementById("VALIDATION").disabled = true;
 		clearInterval(this.interval);
 		document.getElementsByTagName("audio")[0].pause();
@@ -86,10 +88,10 @@ class Jeu {
 		// récup des réponses
 		let answers = new Array(4);
 
-		answers[0] = document.getElementById("CheckA").checked ? 1 : 0;
-		answers[1] = document.getElementById("CheckB").checked ? 1 : 0;
-		answers[2] = document.getElementById("CheckC").checked ? 1 : 0;
-		answers[3] = document.getElementById("CheckD").checked ? 1 : 0;
+		answers[0] = document.getElementById("A").classList.contains("checked") ? 1 : 0;
+		answers[1] = document.getElementById("B").classList.contains("checked") ? 1 : 0;
+		answers[2] = document.getElementById("C").classList.contains("checked") ? 1 : 0;
+		answers[3] = document.getElementById("D").classList.contains("checked") ? 1 : 0;
 
 		let numQuestionTmp = this.numQuestionActuelle - 1;
 
@@ -107,11 +109,6 @@ class Jeu {
 
 		clearInterval(this.interval);
 
-		document.getElementById("CheckA").disabled = true;
-		document.getElementById("CheckB").disabled = true;
-		document.getElementById("CheckC").disabled = true;
-		document.getElementById("CheckD").disabled = true;
-
 		this.timeout = setTimeout(() => this.ProchainJoueur(), 2000);
 	}
 
@@ -120,7 +117,7 @@ class Jeu {
 			this.joueurs.sort(compare);
 			clearInterval(this.interval);
 			this.interval = null;
-			
+
 			document.getElementsByTagName("audio")[0].pause();
 			document.getElementsByTagName("audio")[1].pause();
 
@@ -153,21 +150,22 @@ class Jeu {
 		if (tempsActuel > 0)
 			tempsActuel--;
 
-		if (jeu.joueurs.length > 1)
-			document.getElementById("NomJoueur").innerHTML = "@" + jeu.joueurs[jeu.joueurActuel - 1].nom;
+			if (jeu.joueurs[0].nom != "Anonyme") {
+				document.getElementById("NomJoueur").innerHTML = emojis[this.joueurActuel - 1] + " " + this.joueurs[this.joueurActuel - 1].nom;
+				document.getElementById("NomJoueur").classList.add("couleur" + this.joueurs[this.joueurActuel - 1].couleur);
+			}
 
 		document.getElementById("Temps").innerHTML = "00:" + NumberFormat(Math.ceil(tempsActuel / 100));
 
 		if (tempsActuel == 0) {
-			document.getElementById("CheckA").disabled = true;
-			document.getElementById("CheckB").disabled = true;
-			document.getElementById("CheckC").disabled = true;
-			document.getElementById("CheckD").disabled = true;
-			document.getElementById("CheckA").checked = false;
-			document.getElementById("CheckB").checked = false;
-			document.getElementById("CheckC").checked = false;
-			document.getElementById("CheckD").checked = false;
+			document.getElementById("A").classList.remove("checked");
+			document.getElementById("B").classList.remove("checked");
+			document.getElementById("C").classList.remove("checked");
+			document.getElementById("D").classList.remove("checked");
 			document.getElementById("Temps").innerHTML = "<b style='color: #aa0000'>00:00</b>";
+
+			document.getElementById("VALIDATION").value = "Temps écoulé.";
+			document.getElementById("VALIDATION").disabled = true;
 
 			tempsActuel = this.tempsReponses;
 
@@ -177,15 +175,12 @@ class Jeu {
 	}
 
 	ProchainJoueur() {
+		document.getElementById("VALIDATION").value = "Valider";
 		document.getElementById("VALIDATION").disabled = false;
-		document.getElementById("CheckA").disabled = false;
-		document.getElementById("CheckB").disabled = false;
-		document.getElementById("CheckC").disabled = false;
-		document.getElementById("CheckD").disabled = false;
-		document.getElementById("CheckA").checked = false;
-		document.getElementById("CheckB").checked = false;
-		document.getElementById("CheckC").checked = false;
-		document.getElementById("CheckD").checked = false;
+		document.getElementById("A").classList.remove("checked");
+		document.getElementById("B").classList.remove("checked");
+		document.getElementById("C").classList.remove("checked");
+		document.getElementById("D").classList.remove("checked");
 		this.joueurActuel++;
 
 		tempsActuel = this.tempsReponses;
@@ -220,18 +215,18 @@ class Jeu {
 
 			if (this.questions[numQuestion].defaultAnswers[2] > -1) {
 				document.getElementById("C").innerHTML = this.questions[numQuestion].answersText[2];
-				document.getElementById("PropC").classList.remove("hidden");
+				document.getElementById("C").classList.remove("hidden");
 			}
 			else {
-				document.getElementById("PropC").classList.add("hidden");
+				document.getElementById("C").classList.add("hidden");
 			}
 
 			if (this.questions[numQuestion].defaultAnswers[3] > -1) {
 				document.getElementById("D").innerHTML = this.questions[numQuestion].answersText[3];
-				document.getElementById("PropD").classList.remove("hidden");
+				document.getElementById("D").classList.remove("hidden");
 			}
 			else {
-				document.getElementById("PropD").classList.add("hidden");
+				document.getElementById("D").classList.add("hidden");
 			}
 		}
 	}
@@ -241,11 +236,12 @@ class Joueur {
 	nom = "anonyme";
 	points = 0;
 
-	constructor(nom) {
+	constructor(nom, couleur = 0) {
 		if (nom != "")
 			this.nom = nom;
 
 		this.points = 0;
+		this.couleur = couleur;
 	}
 }
 
@@ -266,8 +262,8 @@ function toggleMode() {
 	document.getElementById("ModeSwitch").innerHTML = modes[gameMode];
 }
 
-function toggleSound(){
-	if (document.getElementById("sound").innerHTML == "🔊"){
+function toggleSound() {
+	if (document.getElementById("sound").innerHTML == "🔊") {
 		document.getElementById("sound").innerHTML = "🔇";
 		document.getElementsByTagName("audio")[0].volume = 0;
 		document.getElementsByTagName("audio")[1].volume = 0;
@@ -375,7 +371,7 @@ questionsM.push(new Question("Certains radars automatiques peuvent :", [1, 0, 1,
 questionsM.push(new Question("Quel indicateur dois-je vérifier lorsque je me trouve en position 3 ?", [0, 0, 1, -1], ["Le niveau d'huile moteur", "Le niveau de liquide de direction assistée", "Le niveau de liquide de freinage", ""]));
 questionsM.push(new Question("Un voyant de couleur orange peur signifier :", [1, 1, 0, 1], ["Un avertissement sur un potentiel danger imminent", "Un éclairage pouvant gêner d'autres automobilistes", "La nécessité de m'arrêter immédiatement", "Un réservoir de carburant presque vide"]));
 questionsM.push(new Question("Le bonhomme est devenu rouge, mais je n'ai pas fini de traverser :", [0, 0, 1, -1], ["Je m'arrête en attendant qu'il redevienne vert", "Je cours à toute vitesse avant de me faire écraser", "Je termine de traverser en accélérant un peu le pas, mais en restant prudent", ""]));
-questionsM.push(new Question("Ce nouveau panneau a été mis en vigueur depuis 2024. Il indique :", [1, 0, 0, 0], ["Une zone dans laquelle je dois prendre des mesures particulières de conduite écologique", "Une zone très fréquentée par les Renault", "Une zone interdite aux Renault", "Une zone réservée aux Renault"]));
+questionsM.push(new Question("Ce nouveau panneau a été mis en vigueur depuis 2024. Il indique :", [1, 0, 0, 0], ["Une zone dans laquelle je dois prendre des mesures écologiques particulières", "Une zone très fréquentée par les Renault", "Une zone interdite aux Renault", "Une zone réservée aux Renault"]));
 
 idQuestion = 1;
 
@@ -420,22 +416,21 @@ function Start(mode) {
 	jeu.totalQuestions = questionsNumber;
 	jeu.ChoixQuestions();
 
-	jeu.joueurs.push(new Joueur(document.getElementById("NomJ1").value));
+	if (document.getElementById("NomJ1").value != "")
+		jeu.joueurs.push(new Joueur(document.getElementById("NomJ1").value, 1));
 
-	if (document.getElementById("NomJ2").value != "") {
-		jeu.joueurs.push(new Joueur(document.getElementById("NomJ2").value));
+	if (document.getElementById("NomJ2").value != "")
+		jeu.joueurs.push(new Joueur(document.getElementById("NomJ2").value, 2));
 
+	if (document.getElementById("NomJ3").value != "")
+		jeu.joueurs.push(new Joueur(document.getElementById("NomJ3").value, 3));
 
-		if (document.getElementById("NomJ3").value != "") {
-			jeu.joueurs.push(new Joueur(document.getElementById("NomJ3").value));
-
-
-
-			if (document.getElementById("NomJ4").value != "") {
-				jeu.joueurs.push(new Joueur(document.getElementById("NomJ4").value));
-			}
-		}
+	if (document.getElementById("NomJ4").value != "") {
+		jeu.joueurs.push(new Joueur(document.getElementById("NomJ4").value, 4));
 	}
+
+	if (jeu.joueurs.length == 0)
+		jeu.joueurs.push(new Joueur("Anonyme"));
 
 	document.getElementById("QuestionContainer").classList.remove("hidden");
 	document.getElementById("ReponseContainer").classList.remove("hidden");

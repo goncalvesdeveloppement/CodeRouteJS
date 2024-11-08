@@ -24,39 +24,75 @@
         <div id="PlayersSetup">
             <div id="PlayersTitle">Joueurs :</div>
             <div id="Players">
-                <input type="text" name="NomJ1" id="NomJ1" placeholder="nom joueur 1">
-                <input type="text" name="NomJ2" id="NomJ2" placeholder="nom joueur 2">
-                <input type="text" name="NomJ3" id="NomJ3" placeholder="nom joueur 3">
-                <input type="text" name="NomJ4" id="NomJ4" placeholder="nom joueur 4">
+                <div class="player">
+                    <span>😛</span>
+                    <input oninput="this.value = this.value.charAt(0).toUpperCase() + this.value.slice(1).toLowerCase()"
+                        type="text" name="NomJ1" id="NomJ1" placeholder="Bill">
+                </div>
+                <div class="player">
+                    <span>🙄</span>
+                    <input oninput="this.value = this.value.charAt(0).toUpperCase() + this.value.slice(1).toLowerCase()"
+                        type="text" name="NomJ2" id="NomJ2" placeholder="Mark">
+                </div>
+                <div class="player">
+                    <span>🤔</span>
+                    <input oninput="this.value = this.value.charAt(0).toUpperCase() + this.value.slice(1).toLowerCase()"
+                        type="text" name="NomJ3" id="NomJ3" placeholder="Elon">
+                </div>
+                <div class="player">
+                    <span>😫</span>
+                    <input oninput="this.value = this.value.charAt(0).toUpperCase() + this.value.slice(1).toLowerCase()"
+                        type="text" name="NomJ4" id="NomJ4" placeholder="Jeff">
+                </div>
             </div>
         </div>
 
         <div id="GameSetup">
             <button id="ModeSwitch" onclick="toggleMode()">👶🏻 Mode FACILE.</button>
-            <button id="QuestionsNumber" onclick="toggleQuestionsNumber()">Jouer 5 questions</button>
+            <button id="QuestionsNumber" onclick="toggleQuestionsNumber()">⏱ Jouer 5 questions</button>
         </div>
-        
+
         <div id="StartContainer">
-            <button id="Start" onclick="Start(gameMode)">Let's go</button>
+            <button id="Start" onclick="Start(gameMode)">✅ Let's go</button>
         </div>
     </div>
     <div id="QuestionContainer" class="hidden">
         <div id="Image">
             <img src="./assets/camion.png" alt="" srcset="">
         </div>
-        <div id="NomJoueur"></div><br>
-        <div id="Question">Question <p id="Numero">01</p>
+        <div id="QuestionBottom">
+            <div id="Question">Question <p id="Numero">01</p>
+            </div>
+            <div id="QuestionRight">
+                <div class="" id="NomJoueur"></div>
+                <div id="Temps">00:15</div>
+            </div>
         </div>
-        <div id="Temps">00:15</div>
         <div id="Enonce">Je dépasse le camion :</div>
     </div>
     <div id="ReponseContainer" class="hidden">
         <div id="Propositions">
-            <div class="prop" id="PropA">
+            <button id="A" class="prop" onclick="this.classList.toggle('checked')">
+                <div class="letter">A</div>
+                <div class="text">Je le dépasse directement</div>
+            </button>
+            <button id="B" class="prop" onclick="this.classList.toggle('checked')">
+                <div class="letter">B</div>
+                <div class="text">Je le dépasse directement</div>
+            </button>
+            <button id="C" class="prop" onclick="this.classList.toggle('checked')">
+                <div class="letter">C</div>
+                <div class="text">Je le dépasse directement</div>
+            </button>
+            <button id="D" class="prop" onclick="this.classList.toggle('checked')">
+                <div class="letter">D</div>
+                <div class="text">Je le dépasse directement</div>
+            </button>
+            <!-- <div class="prop" id="PropA">
                 <div id="A">Je le dépasse directement</div>
                 <div class='dots'></div>
-                <div>A</div><input type="checkbox" name="A" id="CheckA">
-            </div>
+                <div>A</div><input type="checkbox" name="A" id="CheckA"> -->
+            <!-- </div>
             <div class="prop" id="PropB">
                 <div id="B">Je ralentis et mets mon clignotant</div>
                 <div class='dots'></div>
@@ -71,7 +107,7 @@
                 <div id="D">Je reste derrière le camion</div>
                 <div class='dots'></div>
                 <div>D</div><input type="checkbox" name="D" id="CheckD">
-            </div>
+            </div> -->
         </div>
         <div id="ValContainer" class="hidden">
             <input onclick="jeu.Valider()" id="VALIDATION" type="submit" value="Valider">

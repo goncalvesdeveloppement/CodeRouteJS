@@ -1,3 +1,14 @@
+:root {
+    --colorJ1: #f33434;
+    --bgJ1: #e21a1a;
+    --colorJ2: #34f363;
+    --bgJ2: #1ae24c;
+    --colorJ3: #f0c63e;
+    --bgJ3: #e2b31a;
+    --colorJ4: #f36fdd;
+    --bgJ4: #f74edb;
+}
+
 @font-face {
     font-family: 'Kart';
     src: url(fonts/mario_kart_f2.ttf);
@@ -15,12 +26,13 @@ body {
     padding: 16px;
     border-radius: 18px;
     width: 828px;
-    height: 688px;
+    height: 648px;
     margin: calc(50vh - 360px) calc(50vw - 450px);
     position: fixed;
     font-family: "Outfit", sans-serif;
     color: white;
     overflow: hidden;
+    font-variant-caps: small-caps;
 
     display: flex;
     flex-direction: column;
@@ -29,11 +41,54 @@ body {
     box-shadow: 0px 0px 8px #00003366;
 }
 
-img {
-    margin: 20px auto;
-    height: 320px;
+body * {
+    font-variant-caps: small-caps;
+}
+
+#QuestionContainer #Image img {
+    margin: auto;
+    border-radius: 18px;
+    height: 256px;
     max-width: 800px;
     display: block;
+}
+
+#QuestionBottom {
+    display: flex;
+    justify-content: space-between;
+}
+
+#QuestionRight {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+#NomJoueur {
+    font-size: 28px;
+}
+
+.couleur1 {
+    color: var(--colorJ1);
+}
+
+
+.couleur2 {
+    color: var(--colorJ2);
+}
+
+
+.couleur3 {
+    color: var(--colorJ3);
+}
+
+
+.couleur4 {
+    color: var(--colorJ4);
+}
+
+#Temps {
+    font-size: 36px;
 }
 
 .dots {
@@ -48,6 +103,16 @@ img {
 .prop {
     display: flex;
     align-items: center;
+    transition: transform 0.5s;
+    cursor: pointer;
+}
+
+.prop:hover {
+    transform: scale(1.03);
+}
+
+.prop.checked {
+    background-color: #009922;
 }
 
 section {
@@ -55,7 +120,7 @@ section {
     border-radius: 18px;
 }
 
-button {
+button, #VALIDATION {
     background-color: #308af1;
     font-size: 18px;
     color: white;
@@ -100,6 +165,7 @@ label {
     flex-direction: column;
     align-items: stretch;
     text-align: left;
+    gap: 8px;
 }
 
 #Propositions div {
@@ -116,9 +182,8 @@ label {
 
 #Question {
     display: flex;
-    font-family: 'Kart';
     align-items: center;
-    font-size: 24px;
+    font-size: 28px;
 }
 
 .Answer {
@@ -144,13 +209,18 @@ label {
 }
 
 #VALIDATION {
-    margin-top: 40px;
+    margin-top: 16px;
     width: 100%;
-    font-family: "Outfit", sans-serif;
-    padding: 8px;
-    vertical-align: middle;
     font-size: 24px;
     font-weight: bold;
+    height: 42px;
+    vertical-align: middle;
+}
+
+#Enonce {
+    font-size: 24px;
+    margin-top: 16px;
+    text-align: center;
 }
 
 #ValContainer {
@@ -180,6 +250,16 @@ label {
     background-color: #aa0000;  
 }
 
+#GameSetup {
+    gap: 8px;
+    display: flex;
+    width: 100%;
+}
+
+#GameSetup button {
+    width: 50%;
+}
+
 #PlayersSetup {
     display: flex;
     flex-direction: column;
@@ -192,12 +272,21 @@ label {
 }
 
 #Players {
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     display: flex;
+    justify-content: center;
     gap: 8px;
-    width: 70%;
+    width: 100%;
     align-items: stretch;
     padding: 32px 0;
+}
+
+.player {
+    display: flex;
+    flex-direction: row;
+    width: 49%;
+    justify-content: center;
 }
 
 #PlayersTitle {
@@ -207,12 +296,37 @@ label {
 
 #Players input {
     font-size: 18px;
-    color: white;
     background-color: transparent;
-    border-bottom: 1px solid white;
+    border-style: solid;
+    border-width: 1px;
     border-top: none;
     border-left: none;
     border-right: none;
     text-align: center;
     line-height: 24px;
+}
+
+#NomJ1 {
+    border-color: var(--bgJ1);
+    color: var(--colorJ1);
+}
+
+#NomJ2 {
+    border-color: var(--bgJ2);
+    color: var(--colorJ2);
+}
+
+#NomJ3 {
+    border-color: var(--bgJ3);
+    color: var(--colorJ3);
+}
+
+#NomJ4 {
+    border-color: var(--bgJ4);
+    color: var(--colorJ4);
+}
+
+#VALIDATION[disabled] {
+    background-color: #666678;
+    color: #333345;
 }

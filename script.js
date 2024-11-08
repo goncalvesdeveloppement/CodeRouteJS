@@ -190,6 +190,11 @@ class Jeu {
 
 		if (jeu.joueurs[0].nom != "Anonyme") {
 			document.getElementById("NomJoueur").innerHTML = emojis[this.joueurActuel - 1] + " " + this.joueurs[this.joueurActuel - 1].nom;
+			document.getElementById("NomJoueur").classList.remove("couleur1");
+			document.getElementById("NomJoueur").classList.remove("couleur2");
+			document.getElementById("NomJoueur").classList.remove("couleur3");
+			document.getElementById("NomJoueur").classList.remove("couleur4");
+			document.getElementById("NomJoueur").classList.remove("couleur0");
 			document.getElementById("NomJoueur").classList.add("couleur" + this.joueurs[this.joueurActuel - 1].couleur);
 		}
 
@@ -378,7 +383,7 @@ function toggleQuestionsNumber() {
 	questionsNumber += 5;
 	questionsNumber = questionsNumber > 30 ? 5 : questionsNumber;
 
-	document.getElementById("QuestionsNumber").innerHTML = "Jouer " + questionsNumber + " questions"
+	document.getElementById("QuestionsNumber").innerHTML = "⏱ Jouer " + questionsNumber + " questions"
 }
 
 function recapSwitch(incr) {
